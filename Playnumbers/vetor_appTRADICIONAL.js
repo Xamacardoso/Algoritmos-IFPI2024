@@ -1,23 +1,24 @@
-import { getnumber } from "./utils/io_utils.js";
-import fs, { readFile } from "fs"
+import { enter_to_continue, get_number_in_range, getnumber, show_menu } from "./utils/io_utils.js";
+import { exibir_maior_menor, exibir_valores } from "./utils/vetor_funcionalidades.js";
+import { carregar_lista_de_arquivo, inicializar_vetor } from "./utils/vetor_utils.js";
 
-function salvar_lista_em_arquivo(lista){
-    const lista_convertida = lista.join("\n");
-    fs.writeFileSync("arquivo.txt", lista_convertida);
-    console.log(lista_convertida)
-}
 
-function carregar_lista_de_arquivo(arquivo){
-    let lista_arquivo = fs.readFileSync(arquivo, "utf8").split("\n");
-    for (let i = 0; i < lista_arquivo.length; i++){
-        lista_arquivo[i] = Number(lista_arquivo[i]);
-    }
-    console.log(lista_arquivo);
-}
 
 function main(){
-    const data = [1,2,3];
-    carregar_lista_de_arquivo("arquivo.txt");
+    let opcao = 99;
+    let meu_vetor = [];
+    while (opcao != 0){
+        if (opcao===1){
+            meu_vetor = inicializar_vetor();
+            enter_to_continue()
+        }else if (opcao === 2){
+            exibir_valores(meu_vetor);
+            enter_to_continue();
+        }
+
+        show_menu();
+        opcao = get_number_in_range(0, 15, "Escolha: ");
+    }
 }
 
 main();
