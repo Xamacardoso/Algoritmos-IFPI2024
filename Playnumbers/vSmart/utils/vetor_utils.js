@@ -35,6 +35,30 @@ export function inicializar_vetor(opcao, nome_arquivo = ''){
 
 }
 
+export function criar_lista_aleatoria(){
+    const lista_nova = [];
+    const tamanho_array = getpositivenumber("Tamanho da lista: ");
+    const minimo_array = getnumber("Valor mínimo da lista: ");
+    const maximo_array = getnumber("Valor máximo da lista: ");
+
+    for (let i = 0; i < tamanho_array; i++){
+        lista_nova.push(get_number_in_range(minimo_array, maximo_array, `${i+1}° Número: `))
+    }
+    return lista_nova;
+}
+
+export function pedir_lista(){
+    const lista_nova = [];
+    const tamanho_array = getpositivenumber("Tamanho da lista: ");
+    const minimo_array = getnumber("Valor mínimo da lista: ");
+    const maximo_array = getnumber("Valor máximo da lista: ");
+
+    for (let i = 0; i < tamanho_array; i++){
+        lista_nova.push(get_number_in_range(minimo_array, maximo_array, `${i+1}° Número: `))
+    }
+    return lista_nova;
+}
+
 export function adicionar_valor(lista){
     clear_screen();
     const qtd = getpositivenumber("Quantos números deseja adicionar? ");
@@ -108,3 +132,10 @@ export function carregar_lista_de_arquivo(arquivo){
     return lista_arquivo;
 }
 
+export function mapear(lista, func_transformadora){
+    const lista_nova = [];
+    for (let i = 0; i < lista.length; i++){
+        lista_nova.push(func_transformadora(lista[i]));
+    }
+    return lista_nova;
+}

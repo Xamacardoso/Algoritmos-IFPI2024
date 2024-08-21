@@ -1,12 +1,9 @@
-import { clear_screen, enter_to_continue, get_number_in_range, opcoes_inicializar_vetor, show_menu } from "./utils/io_utils.js";
-import { atualizar_valores_vetor, exibir_maior_menor, exibir_negativos, exibir_positivos, exibir_qtd_lista, exibir_valores, media_lista, somatorio_lista } from "./utils/vetor_funcionalidades.js";
-import { adicionar_valor, editar_por_posicao, inicializar_vetor, pedir_nome_arquivo, remover_por_index, remover_por_valor, salvar_lista_em_arquivo } from "./utils/vetor_utils.js";
-
-
 function main(){
+    
     let opcao = 99;
     let meu_vetor = [];
     let arquivo_vetor = "arquivo.txt";
+    
     while (opcao != 0){
 
         if (opcao===1){
