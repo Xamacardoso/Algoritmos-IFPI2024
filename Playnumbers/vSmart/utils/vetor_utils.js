@@ -54,7 +54,7 @@ export function pedir_lista(){
     const maximo_array = getnumber("Valor máximo da lista: ");
 
     for (let i = 0; i < tamanho_array; i++){
-        lista_nova.push(get_number_in_range(minimo_array, maximo_array, `${i+1}° Número: `))
+        lista_nova.push(get_number_in_range(minimo_array, maximo_array, `${i+1}° Número: `));
     }
     return lista_nova;
 }
@@ -63,7 +63,7 @@ export function adicionar_valor(lista){
     clear_screen();
     const qtd = getpositivenumber("Quantos números deseja adicionar? ");
     for (let i = 0; i < qtd; i++){
-        let num = getnumber(`Número ${i+1}: `)
+        let num = getnumber(`Número ${i+1}: `);
         lista.push(num);
     }
     console.log("Novos valores adicionados na sua lista.")
@@ -121,7 +121,7 @@ export function salvar_lista_em_arquivo(lista, nome_arquivo = "arquivo.txt"){
     clear_screen();
     const lista_convertida = lista.join("\n");
     fs.writeFileSync(nome_arquivo, lista_convertida);
-    console.log(`Lista salva em ${nome_arquivo}.`)
+    console.log(`Lista salva em ${nome_arquivo}.`);
 }
 
 export function carregar_lista_de_arquivo(arquivo){
@@ -129,6 +129,7 @@ export function carregar_lista_de_arquivo(arquivo){
     for (let i = 0; i < lista_arquivo.length; i++){
         lista_arquivo[i] = Number(lista_arquivo[i]);
     }
+    console.log("Lista carregada.");
     return lista_arquivo;
 }
 
@@ -139,3 +140,14 @@ export function mapear(lista, func_transformadora){
     }
     return lista_nova;
 }
+
+export function filtrar(lista, criterio){
+    const lista_nova = [];
+    for (let item of lista){
+        if (criterio(item)){
+            lista_nova.push(item)
+        }
+    }
+    return lista_nova;
+}
+
