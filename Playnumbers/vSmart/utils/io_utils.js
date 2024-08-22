@@ -22,7 +22,7 @@ export const get_number_in_range = (min, max, msg) => {
 }
 
 export function show_menu(lista){
-    console.log(`=============== PLAYWORDS SMART ================`)
+    console.log(`=============== PLAYWORDS SMART ================`);
     for (let i = 0; i < menu.length; i++){
         if (menu[i].canShow(lista)){
             console.log(menu[i].text);
