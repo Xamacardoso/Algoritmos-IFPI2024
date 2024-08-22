@@ -1,3 +1,5 @@
+import { menu } from "./vetor_funcionalidades_SMART.js";
+
 export function reduzir(lista, agregadora, inicial){
     let acumulado = inicial;
     for (let i = 0; i < lista.length; i++){
@@ -23,4 +25,14 @@ export function mapear(lista, transformadora){
     }
 
     return nova_lista;
+}
+
+export const validar_lista = (lista) => {return lista.length > 0};
+export const executar = (lista, num) => {
+    for (let i = 0; i < menu.length; i++){
+        if (menu[i].codigo == num){
+            lista = menu[i].executar(lista);
+        }
+    }
+    return lista
 }

@@ -1,10 +1,20 @@
-import { get_positive_number, random_number_range } from "./utils/io_utils.js";
-import { maior_elemento, menor_elemento } from "./utils/vetor_funcionalidades_SMART.js";
+import { clear_screen, get_number_in_range, get_positive_number, random_number_range, show_menu } from "./utils/io_utils.js";
+import { exibir_positivos, maior_elemento, menor_elemento,opcoes } from "./utils/vetor_funcionalidades_SMART.js";
 
 
 function main(){
-    let valores = [1,2,3,4,5]
-    console.log(menor_elemento(valores))
+    let opcao = 99;
+    let meu_vetor = [];
+    let arquivo = "arquivo.txt";
+    
+    while (opcao != 0){
+        meu_vetor = opcoes(opcao);
+
+        clear_screen();
+        show_menu();
+        console.log(meu_vetor)
+        opcao = get_number_in_range(0,15);
+    }
 }
 
 main();
