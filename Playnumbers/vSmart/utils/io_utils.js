@@ -1,52 +1,24 @@
 import { question } from "readline-sync";
 
-export function write(message){
-    console.log(message)
-}
-export function getnumber(message){
-    return Number(question(message))
-}
-
-export function getstring(message){
-    return String(question(message))
-}
-
-export function getpositivenumber(message){
-    const num = Number(question(message))
-    if(num <= 0){
-        write('O numero deve ser positivo!')
-        return getpositivenumber(message)
+export const get_number = (msg) => Number(question(msg));
+export const get_string = (msg) => question(msg);
+export const get_positive_number = () => {
+    let x = get_number("Digite um número positivo: ");
+    while(x < 1){
+        console.log("Erro! O número digitado deve ser positivo!");
+        x = get_number("Digite um número positivo: ");
     }
-    return num
+    return x;
 }
-
-export function get_random_number(min, max){
-    return Math.floor(Math.random() * (max - min)) + min
-}
-
-export function get_number_in_range(min, max, msg){
-    let num = getnumber(msg);
-    if (num < min || num > max){
-        console.log(`Numero inválido! Digite um valor entre ${min} e ${max}`);
-        return get_number_in_range(min, max, msg);
+export const random_number_range = (min, max) => Math.floor(Math.random() * (max+1 - min)) + min;
+export const get_number_in_range = (min, max) => {
+    let x = get_number("Digite um numero: ");
+    while (x < min || x > max){
+        console.log(`Valor inválido!! Digite um valor entre ${min} e ${max}.`);
+        let x = get_number("Digite um numero: ");    
     }
-    return num;
+    return x
 }
-
-export function getnegativenumber(message){
-    const num = Number(question(message))
-    if(num >= 0){
-        write('O numero deve ser negativo!')
-        return getnegativenumber(message)
-    }
-    return num
-}
-
-
-export function enter_to_continue(){
-    getstring('Enter to continue...');
-
-} 
 
 export function show_menu(){
     console.log(
@@ -72,15 +44,6 @@ export function show_menu(){
 0 - Sair
 `
     )
-}
-
-export function opcoes_inicializar_vetor(){
-    console.log(
-        `
-1 - Inserir números manualmente
-2 - Inserir valores aleatorios no array
-    3 - Carregar valores a partir de um arquivo
-        `)
 }
 
 export function clear_screen(){
