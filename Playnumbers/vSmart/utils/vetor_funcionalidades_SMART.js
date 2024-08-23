@@ -1,9 +1,12 @@
-import { filtrar, validar_lista, reduzir, resetar_vetor } from "./vetor_utils_SMART.js";
+import { clear_screen, enter_to_continue, get_number, get_number_in_range, show_menu } from "./io_utils.js";
+import { filtrar, validar_lista, reduzir, resetar_vetor, executar, mapear } from "./vetor_utils_SMART.js";
 export const menu = [
     {
         text: "1  - Inicializar Vetor",
         canShow: () => true,
-        executar: (lista) => [1,2,3,4,5],
+        executar: (lista) => {
+            console.log("Vetor inicializado com sucesso.")
+            return [-1,-2,-3,0,1,2,3]},
         codigo: 1
     },
     {
@@ -58,16 +61,69 @@ export const menu = [
         },
         codigo: 7
     },
+    {
+        text: "8 - Exibir valores positivos e sua quantidade.",
+        canShow: (lista) => contar_elementos(lista, x => x>0) > 0,
+        executar: (lista) => {
+            exibir_filtrados(lista, x => x > 0, "positivos");
+            return lista;
+        },
+        codigo: 8
+    },
+    {
+        text: "9 - Exibir valores negativos e sua quantidade.",
+        canShow: (lista) => contar_elementos(lista, x => x<0) > 0,
+        executar: (lista) => {
+            exibir_filtrados(lista, x => x < 0, "negativos");
+            return lista;
+        },
+        codigo: 9
+    },
+    {
+        text: "10 - Atualizar todos os valores da lista ",
+        canShow: (lista) => contar_elementos(lista, x => x<0) > 0,
+        executar: (lista) => {
+            return atualizar_valores(lista);
+        },
+        codigo: 10
+    },
+]
+
+const menu_valores = [
+    {
+        text: "1 - Multiplicar por um valor",
+        canShow: () => true,
+        executar: (lista) => {
+            const numero = get_number("Valor para multiplicar todos os elementos da lista: ")
+            console.log(`Valores da lista multiplicados por ${numero}`)
+            return mapear(lista, x => x*numero);
+        },
+        codigo: 1
+    },
+
 ]
 
 export const somatorio = (lista) => reduzir(lista,(acc, x) => acc+x ,0);
 export const media = (lista) => somatorio(lista)/lista.length;
 export const maior_elemento = (lista) => reduzir(lista,(x, y) => x > y ? x : y ,lista[0]);
 export const menor_elemento = (lista) => reduzir(lista,(x, y) => x < y ? x : y ,lista[0]);
-export const exibir_positivos = (lista) => {
+export const exibir_filtrados = (lista, criterio, msg_filtro) => {
+    console.log(`Existem ${filtrar(lista, criterio).length} valores ${msg_filtro} na lista`)
     for (let i = 0; i < lista.length; i++){
-        if (lista[i] > 0){
-             console.log(`Index ${i} -> ${lista[i]}`);
+        if (criterio(lista[i])){
+            console.log(`Index ${i} -> ${lista[i]}`);
         }
     }
+}
+
+export const contar_elementos = (lista, criterio) => {
+    lista = filtrar(lista, criterio);
+    return lista.length;
+}
+
+export const atualizar_valores = (lista) =>{
+    show_menu(lista, menu_valores);
+    const opcao = get_number_in_range(1,6, "Escolha: ");
+    clear_screen();
+    return executar(lista, opcao, menu_valores);
 }

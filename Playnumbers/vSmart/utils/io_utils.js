@@ -3,6 +3,7 @@ import { menu } from "./vetor_funcionalidades_SMART.js";
 
 export const get_number = (msg) => Number(question(msg));
 export const get_string = (msg) => question(msg);
+
 export const get_positive_number = () => {
     let x = get_number("Digite um número positivo: ");
     while(x < 1){
@@ -11,7 +12,9 @@ export const get_positive_number = () => {
     }
     return x;
 }
+
 export const random_number_range = (min, max) => Math.floor(Math.random() * (max+1 - min)) + min;
+
 export const get_number_in_range = (min, max, msg) => {
     let x = get_number(msg);
     while (x < min || x > max){
@@ -21,7 +24,9 @@ export const get_number_in_range = (min, max, msg) => {
     return x
 }
 
-export function show_menu(lista){
+export const enter_to_continue = () => get_string("Pressione ENTER para continuar...")
+
+export function show_menu(lista, menu){
     console.log(`=============== PLAYWORDS SMART ================`);
     for (let i = 0; i < menu.length; i++){
         if (menu[i].canShow(lista)){

@@ -1,5 +1,5 @@
 import { menu } from "./vetor_funcionalidades_SMART.js";
-import { get_number } from "./io_utils.js";
+import { clear_screen, enter_to_continue, get_number } from "./io_utils.js";
 
 export function reduzir(lista, agregadora, inicial){
     let acumulado = inicial;
@@ -38,11 +38,17 @@ export const resetar_vetor = (lista) => {
     }
     return nova_lista;
 }
-export const executar = (lista, num) => {
+export const executar = (lista, num, menu) => {
     for (let i = 0; i < menu.length; i++){
         if (menu[i].codigo == num){
+            if (!menu[i].canShow(lista)){
+                clear_screen();
+                console.log("Opção inválida! Execute uma das opções exibidas!!");
+                continue;
+            }
             lista = menu[i].executar(lista);
         }
+        
     }
-    return lista
+    return lista;
 }
