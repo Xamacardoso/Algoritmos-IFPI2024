@@ -1,5 +1,4 @@
 import { question } from "readline-sync";
-import { menu } from "./vetor_funcionalidades_SMART.js";
 
 export const get_number = (msg) => Number(question(msg));
 export const get_string = (msg) => question(msg);
@@ -14,7 +13,14 @@ export const get_positive_number = () => {
 }
 
 export const random_number_range = (min, max) => Math.floor(Math.random() * (max+1 - min)) + min;
-
+export const get_number_min = (min, msg) => {
+    let x = get_number(msg);
+    while (x < min){
+        console.log(`Erro! O número digitado deve ser maior que ${min}`);
+        x = get_number(`Digite um número maior que ${min}: `);
+    }
+    return x
+}
 export const get_number_in_range = (min, max, msg) => {
     let x = get_number(msg);
     while (x < min || x > max){
@@ -33,6 +39,7 @@ export function show_menu(lista, menu){
             console.log(menu[i].text);
         }
     }
+    console.log(`================================================`)
 }
 
 export function clear_screen(){
