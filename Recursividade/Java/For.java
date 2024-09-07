@@ -59,10 +59,9 @@ public class For {
         int x1 = 0;
         int x2 = 1;
         int aux;
-
+        System.out.println("Sequência: ");
         for (int i = 0; i < n; i++){
-            String comp = (i == n-1) ? "" : " ";
-            System.out.println("Sequência: ");
+            String comp = (i == n-1) ? "\n" : " ";
             System.out.print(x1 + comp);
             aux = x2;
             x2 += x1;
@@ -78,7 +77,7 @@ public class For {
         int b = in.nextInt();
 
         for (int i = a; i <= b; i++){
-            String comp = (i == b) ? "" : " ";
+            String comp = (i == b) ? "\n" : " ";
             System.out.print(i + comp);
         }
     }
