@@ -1,59 +1,125 @@
+import javax.sound.midi.Soundbank;
+import java.sql.SQLOutput;
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class HanoiRGB {
     public static void main(String[] args) {
         try (Scanner in = new Scanner(System.in)) {
-            exibirDificuldades();
-            Integer dificuldade = in.nextInt();
-            Integer jogador1 = partidaHanoi('1', dificuldade);
+            showDifficulties();
+            Integer difficulty = in.nextInt();
+            char [][] towers1 = new char[3][];
+            towers1 = fillTowers(towers1, difficulty);
+            char [][] towers2 = towers1.clone();
+
+            Integer jogador1 = partidaHanoi('1', towers1, in);
 //            Integer jogador2 = partidaHanoi('2', dificuldade);
 
         }
     }
 
-    public static Integer partidaHanoi(char jogador, Integer dificuldade) {
-        Integer turnos = 0;
-        char[][] torres = new char[3][];
-
-        switch (dificuldade){
+    // Preenche as torres baseado na dificuldade
+    public static char[][] fillTowers(char [][] towers, Integer difficulty){
+        switch (difficulty){
             case 1 -> {
-                torres[0] = torreRGB(9);
+                towers[0] = torreRGB(9);
             }case 2 -> {
-                for (int i = 0; i < torres.length; i++){
-                    torres[i] = torreRGB(6);
+                for (int i = 0; i < towers.length; i++){
+                    towers[i] = torreRGB(6);
+                }
+            }case 3 -> {
+                for (int i = 0; i < towers.length; i++){
+                    towers[i] = torreRGB(8);
                 }
             }
         }
-        System.out.println(torres.length);
-        // Printa as arrays
-        System.out.println(Arrays.toString(new String[]{Arrays.deepToString(torres)}));
+        System.out.println(towers.length);
+        // Exibe as arrays
+        System.out.println(Arrays.toString(new String[]{Arrays.deepToString(towers)}));
+        return towers;
+    }
+
+    // Partida da torre hanoi RGB
+    public static Integer partidaHanoi(char player, char[][] towers, Scanner in) {
+        Integer turnos = 0;
+        System.out.println("Vez do jogador " + player);
+        System.out.printf("Turno %d\n", turnos+1);
+        String play = requestMovement(in, towers);
+
+
+        turnos++;
         return turnos;
     }
 
-    public static char[] torreRGB(Integer nElementos){
-        // Torre começa sendo uma arraylist para poder dar push nos elementos
-        List<Character> vetor = new ArrayList<>();
-
-        for (int i =0; i< (nElementos/3); i++){
-            vetor.add('R');
-            vetor.add('G');
-            vetor.add('B');
+    // Pede um movimento ao usuário até ele ser válido
+    public static String requestMovement(Scanner in, char[][] towers){
+        String play = in.nextLine();
+        String[] positions = play.split("");
+        while (!validatemovent(positions[0], positions[1], towers)){
+            play = in.nextLine();
+            positions = play.split("");
         }
 
-        // Embaralha a torre
-        Collections.shuffle(vetor);
-
-        char[] torre = new char[nElementos];
-        for (int i = 0; i < vetor.size(); i++){
-            torre[i] = vetor.get(i);
-        }
-        return torre;
-
+        return play;
     }
 
-    public static void exibirDificuldades(){
+    // Valida o movimento
+    public static boolean validatemovent(String pos1, String pos2, char[][] towers){
+        if (!pos1.equalsIgnoreCase("R") || !pos1.equalsIgnoreCase("G") || !pos1.equalsIgnoreCase("B")
+        && !pos2.equalsIgnoreCase("R") || !pos2.equalsIgnoreCase("G") || !pos2.equalsIgnoreCase("B")){
+            System.out.println("MOVIMENTO INVÁLIDO, DIGITE UM MOVIMENTO VÁLIDO. (Ex.: 'bg')");
+            return false;
+        } else if (pos1 == pos2) {
+            System.out.println("MOVIMENTO INVÁLIDO, A TORRE DE ORIGEM NÃO PODE SER A MESMA DO DESTINO");
+            return false;
+        }
+        else if (getTower(pos1, towers) == null){
+            System.out.println("MOVIMENTO INVÁLIDO, A ORIGEM NÃO PODE ESTAR VAZIA!");
+            return false;
+        } else if (towerIsFull(getTower(pos2,towers))) {
+            System.out.println("MOVIMENTO INVÁLIDO, A ORIGEM NÃO PODE ESTAR VAZIA!");
+            return false;
+        }
+
+        return true;
+    }
+
+    // Retorna se a torre está cheia ou não
+    public static boolean towerIsFull(char[] tower){
+        for (Character c : tower){
+            if (c == null) return false;
+        }
+        return true;
+    }
+
+    // Pega uma torre baseada na string
+    public static char[] getTower(String sel,char[][] towers){
+        if(sel.equalsIgnoreCase("R")){
+            return towers[0];
+        }else if(sel.equalsIgnoreCase("G")){
+            return towers[1];
+
+        return towers[2];
+    }
+
+    // Gera uma torre RGB aleatória
+    public static char[] torreRGB(Integer nElements){
+        char[] tower = new char[9];
+
+        // Letras possíveis
+        char[] letters = new char[] { 'R', 'G', 'B' };
+
+        // Preenchendo a torre aleatoriamente
+        for (int i = 0; i < nElements; i++) {
+            // Pega uma letra aleatoria e coloca ele na torre
+            int index = randomNumberInRange(0, 2);
+            tower[i] = letters[index];
+        }
+
+        return tower;
+    }
+
+    // Mostra as dificuldades
+    public static void showDifficulties(){
         System.out.println("""
                 1 - Fácil (Só uma torre preenchida)
                 2 - Médio (Mais torres preenchidas)
@@ -61,15 +127,30 @@ public class HanoiRGB {
                 """);
     }
 
-    public static boolean ganhou(char[][] torres){
-        return torreSoTem(torres[0], 'R') && torreSoTem(torres[1], 'G') && torreSoTem(torres[2], 'B');
+    // Gerar numero aleatorio
+    public static int randomNumberInRange(int min, int max){
+        return (int) (Math.random() * (max - min + 1)) + min;
     }
 
-    public static boolean torreSoTem(char[] torre, char elemento){
-        char[] torreLista = Arrays.copyOfRange(torre, 0, torre.length-1);
-        for (char pedaco: torreLista){
-            if (pedaco != elemento) return false;
+    // Condição de vitoria do jogador
+    public static boolean playerWon(char[][] towers){
+        return towerOnlyHas(towers[0], 'R') && towerOnlyHas(towers[1], 'G') && towerOnlyHas(towers[2], 'B');
+    }
+
+    // Verificação para saber se a torre so tem um determinado caractere
+    public static boolean towerOnlyHas(char[] tower, char element){
+        char[] towerList = Arrays.copyOfRange(tower, 0, tower.length-1);
+        for (char piece: towerList){
+            if (piece != element) return false; // Se nao for todos iguais a torre nao ta completa. Retorna falso nesse caso
         }
         return true;
     }
+
+    // Limpa a tela
+    public static void clear(){
+        for (int i = 0; i < 50; i++) {
+            System.out.println();
+        }
+    }
 }
+
