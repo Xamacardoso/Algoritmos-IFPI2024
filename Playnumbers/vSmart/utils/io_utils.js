@@ -39,7 +39,7 @@ export function show_menu(lista, menu){
             console.log(menu[i].text);
         }
     }
-    console.log(`================================================`)
+    console.log(`================================================`);
 }
 
 export function clear_screen(){
