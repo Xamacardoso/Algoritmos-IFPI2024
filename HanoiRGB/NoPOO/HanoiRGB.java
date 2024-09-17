@@ -47,6 +47,7 @@ public class HanoiRGB {
         Integer turnos = 0;
         System.out.println("Vez do jogador " + player);
         while (!playerWon(towers)) {
+            clear();
             System.out.printf("Turno %d\n", turnos + 1);
             String[] play = requestMovement(in, towers);
             // Adicionar o ultimo elemento de uma torre em outra
@@ -251,8 +252,11 @@ public class HanoiRGB {
             result = "JOGADOR 2 VENCEU!!!";
         }
         System.out.printf("""
-                =============== RESULTADO ==============
-                %s""", result);
+                ========== RESULTADO =========
+                Jogador 1: %d movimentos
+                Jogador 2: %d movimentos
+                
+                %s""", p1, p2, result);
     }
 }
 
