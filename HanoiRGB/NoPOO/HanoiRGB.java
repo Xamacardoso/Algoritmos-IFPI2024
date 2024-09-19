@@ -1,5 +1,4 @@
 import java.util.*;
-
 public class HanoiRGB {
     public static void main(String[] args) {
         try (Scanner in = new Scanner(System.in)) {
@@ -22,8 +21,7 @@ public class HanoiRGB {
     public static Character[][] fillTowers(Character[][] towers, Integer difficulty) {
         switch (difficulty) {
             case 1 -> {
-                //towers[0] = torreRGB(9);
-                towers[0] = new Character[]{'R','G','B',null,null,null,null,null,null};
+                towers[0] = torreRGB(9);
                 towers[1] = new Character[9];
                 towers[2] = new Character[9];
             }
@@ -231,6 +229,7 @@ public class HanoiRGB {
         Scanner entry = new Scanner(System.in);
         System.out.print("Aperte ENTER para continuar...");
         entry.nextLine();
+        entry.close();
     }
 
     // Copiar vetor
