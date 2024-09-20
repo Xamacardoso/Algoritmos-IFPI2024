@@ -37,6 +37,7 @@ function execute(choice, list){
         // Adicionar movie
         case 2:
             addMovie(list);
+            console.log("Movie adicionado com sucesso!")
             break;
 
         // Remover movie
