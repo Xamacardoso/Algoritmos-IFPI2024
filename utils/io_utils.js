@@ -23,7 +23,7 @@ export function getpositivenumber(message){
 
 
 export function enter_to_continue(){
-    get_text('Enter to continue...');
+    getstring('Enter to continue...');
 
 } 
   
