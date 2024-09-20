@@ -1,12 +1,13 @@
 from random import choice as randItem
 
 class Card():
-    def __init__(self,val,suit) -> None:
+    def __init__(self,val,suit,rep) -> None:
         self.val = val;
+        self.rep = rep;
         self.suit = suit;
 
     def __str__(self) -> str:
-        return " of ".join(map(str, [self.val, self.suit]))
+        return " ".join(map(str, [self.rep, self.suit]))
         
 
 
@@ -28,22 +29,21 @@ class Deck():
             "K":13,
         }
         self.suits = {
-            "H": "Hearts",
-            "S": "Spades",
-            "D": "Diamonds",
-            "C": "Clubs",
+            "H": "\u2665",
+            "S": "\u2660",
+            "D": "\u2666",
+            "C": "\u2663"
         }
         self.cards = [];
     
-    def _add_card(self,val,suit):
-        self.cards.append(Card(self.vals[val],self.suits[suit]))
+    def _add_card(self,val,suit,rep):
+        self.cards.append(Card(self.vals[val],self.suits[suit],rep))
 
     def _add_random_card(self):
         valkey = randItem(list(self.vals.keys()))
-        val = self.vals[valkey]
         suitkey = randItem(list(self.suits.keys()))
-        suit = self.suits[suitkey]
-        self._add_card(valkey,suitkey);
+        rep = randItem(list(self.vals))
+        self._add_card(valkey,suitkey,rep);
 
     def _show_cards(self):
         for card in self.cards:
