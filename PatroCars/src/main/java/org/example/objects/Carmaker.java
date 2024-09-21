@@ -8,8 +8,8 @@ public class Carmaker {
     private String country;
     private int year;
 
-    public Carmaker (String name, String country, int year){
-        this.id = UlidCreator.getUlid().toString();
+    public Carmaker (String id, String name, String country, int year){
+        this.id = id.length() == 26 ? id : UlidCreator.getUlid().toString();
         this.name = name;
         this.country = country;
         this.year = year;
@@ -53,5 +53,9 @@ public class Carmaker {
         "ID: " + id + "\n" +
         "País: " + country + "\n" +
         "Ano de fundação: " + year + "\n";
+    }
+
+    public String infoToString(){
+        return id+","+name+","+country+","+year;
     }
 }
