@@ -116,8 +116,8 @@ function showReduces(){
 2 - Exibir filme mais novo
 3 - Exibir filme mais bem-avaliado na IMDB
 4 - Exibir filme com pior avaliação na IMDB
-5 - Exibir filme com menor arrecadação
-6 - Exibir filme com maior arrecadação
+5 - Exibir filme com maior arrecadação
+6 - Exibir filme com menor arrecadação
             
 0 - Sair
     `);
