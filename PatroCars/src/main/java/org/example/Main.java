@@ -1,11 +1,9 @@
 package org.example;
-import com.github.f4b6a3.ulid.UlidCreator;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
-import org.example.objects.Carmaker;
+import org.example.entities.Carmaker;
 
 public class Main {
     public static void main(String[] args) {
@@ -13,6 +11,12 @@ public class Main {
         //carmakers.add(new Carmaker("1","Patrocaralhos","Canada",2022));
         showCarmakers(carmakers);
         saveCarmakers(carmakers);
+    }
+
+    public static void execute(int choice){
+        if (choice == 0){
+            System.out.println("Saindo...");
+        }
     }
 
     // Exibe as montadoras de carros
@@ -30,7 +34,6 @@ public class Main {
             writer.println("id,name,country,year");
 
             // Dados do CSV
-
             for (Carmaker carmaker : carmakers) {
                 writer.println(carmaker.infoToString());
             }
@@ -47,7 +50,6 @@ public class Main {
         String path = "database/carmakers.csv";
 
         try (BufferedReader br = new BufferedReader(new FileReader(path))) {
-            // método readLine() lê uma linha do arquivo, se estiver no final retorna nulo
             // Header
             String line = br.readLine();
             line = br.readLine();
@@ -72,5 +74,15 @@ public class Main {
         }
 
         return carmakers;
+    }
+
+    // Exibe o menu
+    public static void showMenu(){
+        System.out.println("""
+        1 - Listar montadoras
+        2 - Adicionar montadora
+        3 - Remover montadora
+        
+        0 - Sair""");
     }
 }

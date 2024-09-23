@@ -1,4 +1,4 @@
-package org.example.objects;
+package org.example.entities;
 import com.github.f4b6a3.ulid.UlidCreator;
 
 public class Carmaker {
