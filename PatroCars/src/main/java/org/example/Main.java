@@ -9,7 +9,7 @@ import java.util.Scanner;
 import org.example.entities.Carmaker;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IllegalAccessException {
         ArrayList<Carmaker> carmakers = loadCarmakers();
         try (Scanner in = new Scanner(System.in)){
             int choice = 1;
@@ -33,7 +33,7 @@ public class Main {
     }
 
     // Executa uma ação baseada numa escolha
-    public static void execute(int choice, Scanner in, ArrayList<Carmaker> carmakers){
+    public static void execute(int choice, Scanner in, ArrayList<Carmaker> carmakers) throws IllegalAccessException {
         // Zera o buffer
         in.nextLine();
         if (choice == 0){
@@ -61,14 +61,19 @@ public class Main {
         // Remove uma montadora de veículos
         }else if(choice == 3){
             showCarmakers(carmakers, true);
-            System.out.print("Insira a posição da montadora que deseja remover: ");
+            System.out.print("Insira a posição da montadora que deseja REMOVER: ");
             int removeIndex = in.nextInt();
             carmakers.remove(removeIndex-1);
             in.nextLine();
             System.out.println("Montadora removida ;)");
 
         }else if (choice == 4){
-            modifyAttribute(carmakers.get(0));
+            showCarmakers(carmakers, true);
+            System.out.print("Insira a posição da montadora que deseja MODIFICAR: ");
+            int modifyIndex = in.nextInt();
+            modifyAttribute(carmakers.get(modifyIndex-1));
+            in.nextLine();
+
         }
     }
 
@@ -148,7 +153,7 @@ public class Main {
         entry.nextLine();
     }
 
-    public static void modifyAttribute(Object obj) {
+    public static void modifyAttribute(Object obj) throws IllegalAccessException {
         // Pega os campos com os atributos do objeto
         Field[] fields = obj.getClass().getDeclaredFields();
         Scanner in = new Scanner(System.in);
@@ -171,14 +176,18 @@ public class Main {
         Field field = fields[modifyChoice-1]; // Pega o campo da modificação
         field.setAccessible(true); // Permite que eu acesse o setter do atributo do objeto sem erros
         Class<?> type = field.getType(); // Pega o tipo do atributo do objeto
-        System.out.print("Novo valor para o atributo " + field.getName() + ": \n");
+        System.out.print("Novo valor para o atributo " + field.getName() + ": ");
         // TODO: Terminar a implementação do modificador de objeto pai
         if (type == String.class){
-            System.out.println("É ESTRINGUE");
-        }else if(type == int.class){
-            System.out.println("É INTEIRO DA SILVA JR");
-        }
+            String newVal = in.next();
+            field.set(obj, newVal);
 
+        }else if(type == int.class){
+            int newVal = in.nextInt();
+            field.set(obj, newVal);
+
+        }
+        System.out.println("Atributo modificado ;)");
 
 
         //System.out.println(Arrays.toString(fields));
