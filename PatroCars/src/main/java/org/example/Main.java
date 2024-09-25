@@ -15,7 +15,8 @@ public class Main {
             int choice = 1;
             while (choice != 0) {
                 //carmakers.add(new Carmaker("1","Patrocaralhos","Canada",2022));
-                showMenu();
+                showMenu(carmakers);
+                System.out.print("Escolha: ");
                 choice = in.nextInt();
                 execute(choice, in, carmakers);
                 pressEnter();
@@ -74,6 +75,11 @@ public class Main {
             modifyAttribute(carmakers.get(modifyIndex-1));
             in.nextLine();
 
+        }else if (choice == 5) {
+            //showSortedCarmakers(carmakers);
+        } else if (choice == 6) {
+            saveCarmakers(carmakers);
+            System.out.println("Montadoras salvas em arquivo ;)");
         }
     }
 
@@ -83,6 +89,19 @@ public class Main {
             if (indexed){System.out.printf("========= MONTADORA %d =========\n", (i + 1));}
             System.out.println(carmakers.get(i).toString());
         }
+    }
+
+    // Exibe as montadoras de forma criterizada
+    public static void showSortedCarmakers(ArrayList<Object> carmakers){
+        Scanner in = new Scanner(System.in);
+        Object obj = carmakers.get(0);
+        Field[] fields = obj.getClass().getDeclaredFields();
+        showAttributes(obj, fields);
+        //System.out.print("Escolha: ");
+        fields[0].setAccessible(true);
+
+        // TODO: Acessar um atributo pra poder usar de filtro e fazer o reversed.
+
     }
 
     // Salva as montadoras de carros num arquivo .csv
@@ -136,14 +155,19 @@ public class Main {
     }
 
     // Exibe o menu
-    public static void showMenu(){
-        System.out.println("""
+    public static void showMenu(ArrayList<?> list){
+        System.out.printf("""
+        ======== PATROCARS ========
+        %d montadoras disponíveis
+        
         1 - Listar montadoras
         2 - Adicionar montadora
         3 - Remover montadora
         4 - Modificar montadora
+        5 - Filtrar montadoras
+        6 - Salvar montadoras
         
-        0 - Sair""");
+        0 - Sair\n\n""", list.size());
     }
 
     // Espera o usuário apertar enter para continuar
@@ -151,6 +175,14 @@ public class Main {
         Scanner entry = new Scanner(System.in);
         System.out.print("Pressione ENTER para continuar...");
         entry.nextLine();
+    }
+
+    public static void showAttributes(Object obj, Field[] fields){
+        System.out.println("Atributos para filtrar: ");
+        for (int i = 0; i < fields.length ; i++) {
+            fields[i].setAccessible(true);
+            System.out.println( i+1 + " - " + fields[i].getName());
+        }
     }
 
     public static void modifyAttribute(Object obj) throws IllegalAccessException {
@@ -177,7 +209,7 @@ public class Main {
         field.setAccessible(true); // Permite que eu acesse o setter do atributo do objeto sem erros
         Class<?> type = field.getType(); // Pega o tipo do atributo do objeto
         System.out.print("Novo valor para o atributo " + field.getName() + ": ");
-        // TODO: Terminar a implementação do modificador de objeto pai
+
         if (type == String.class){
             String newVal = in.next();
             field.set(obj, newVal);
